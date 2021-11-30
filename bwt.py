@@ -1,17 +1,12 @@
-text = "aabaabaabba$"
-words = list(text)
-lst = []
-for i in range(len(words)):
-    word = text[-1] + text[:-1]
-    new = ''.join(word)
-    text = new
-    lst.append(new)
-    i += 1
+def rotate(text):
+    rotations = []
+    for i in text:
+        text = text[-1] + text[:-1]
+        rotations.append(text)
+    return rotations
 
-sort = sorted(lst)
-print(sort)
-for i in range(len(words)):
-    element = sort[i]
-    last = element[- 1]
-    i = i + 1
-    print(last)
+def matrix(text):
+    return sorted(rotate(text))
+
+def transform(text):
+    return [t[-1] for t in matrix(text)]
