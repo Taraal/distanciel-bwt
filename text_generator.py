@@ -24,13 +24,11 @@ def generate_texts():
             except UnicodeDecodeError as e:
                 print(file)
                 
-            print('caca')
             for index, step  in enumerate(STEPS):
                  # Pour chaque texte, on prend un emplacement aléatoire T dans le corpus 
                  # et on sectionne T + la taille N souhaitée du texte
 
                 starting_point = random.randint(0, len(data) - (MAX_LENGTH+1))
-                print("prout")
                 with open(f'data/split/{file[:-4]}-{index}.txt', 'w', encoding="ISO-8859-1") as fw:
                     fw.write(data[starting_point:starting_point+int(step)])
 
