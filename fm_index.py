@@ -1,5 +1,23 @@
 import time
 
+def rotate(text):
+    rotations = []
+    for char in text:
+        text = text[-1] + text[:-1]
+        rotations.append(text)
+    return rotations
+
+def matrix(text):
+    
+    return sorted(rotate(text))
+
+def get_transform(text):
+    return ''.join([t[-1] for t in matrix(text)]), text.find("$")
+
+def get_f(text):
+    return [t[1] for t in matrix(text)]
+
+
 def suffixArray(s):
     satups = sorted([(s[i:], i) for i in range(len(s))])
     return list(map(lambda x: x[1], satups)) 
@@ -64,7 +82,7 @@ class FmIndex():
         if t[-1] != '$':
             t += '$'
         sa = suffixArray(t)
-        self.bwt, self.dollarRow = bwtFromSa(t, sa)
+        self.bwt, self.dollarRow = get_transform(t)
         self.ssa = self.downsampleSuffixArray(sa, ssaIval)
         self.slen = len(self.bwt)
         
