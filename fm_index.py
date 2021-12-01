@@ -1,22 +1,5 @@
 import time
-
-def rotate(text):
-    rotations = []
-    for char in text:
-        text = text[-1] + text[:-1]
-        rotations.append(text)
-    return rotations
-
-def matrix(text):
-    
-    return sorted(rotate(text))
-
-def get_transform(text):
-    return ''.join([t[-1] for t in matrix(text)]), text.find("$")
-
-def get_f(text):
-    return [t[1] for t in matrix(text)]
-
+from bwt import get_transform
 
 def suffixArray(s):
     satups = sorted([(s[i:], i) for i in range(len(s))])

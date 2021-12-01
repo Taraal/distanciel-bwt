@@ -9,7 +9,7 @@ def matrix(text):
     return sorted(rotate(text))
 
 def get_transform(text):
-    return ''.join([t[-1] for t in matrix(text)])
+    return ''.join([t[-1] for t in matrix(text)]), text.find("$")
 
 def get_f(text):
     return [t[1] for t in matrix(text)]
