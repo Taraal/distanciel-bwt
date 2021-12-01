@@ -2,7 +2,7 @@ import numpy as np
 import random
 
 
-MIN_LENGTH = 13 # Nmin (13 étant la taille maximale d'un motif à rechercher, comme écrit sur le sujet du distanciel)
+MIN_LENGTH = 26 # Nmin (13 étant la taille maximale d'un motif à rechercher, comme écrit sur le sujet du distanciel, on la double)
 MAX_LENGTH = MIN_LENGTH * 201 # Nmax
 NB_TXT = 10 # K (10 textes pour chaque fichier)
 STEPS = np.linspace(MIN_LENGTH, MAX_LENGTH, num=NB_TXT) # Réparition des tailles de textes entre nmin et nmax
@@ -20,16 +20,18 @@ def generate_texts():
     for file in files:
         with open('data/corpora/'+file, 'r', encoding="ISO-8859-1") as f: # Utf-8 gives a UnicodeDecodeError with accents in europarl corpora
             try:
-                data = f.read()
+                data = f.read().lower()
             except UnicodeDecodeError as e:
                 print(file)
                 
-
+            print('caca')
             for index, step  in enumerate(STEPS):
                  # Pour chaque texte, on prend un emplacement aléatoire T dans le corpus 
                  # et on sectionne T + la taille N souhaitée du texte
 
-                starting_point = random.randint(0, len(data))
-
+                starting_point = random.randint(0, len(data) - (MAX_LENGTH+1))
+                print("prout")
                 with open(f'data/split/{file[:-4]}-{index}.txt', 'w', encoding="ISO-8859-1") as fw:
                     fw.write(data[starting_point:starting_point+int(step)])
+
+generate_texts()

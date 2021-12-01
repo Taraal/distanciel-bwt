@@ -1,5 +1,6 @@
 import os 
 import random
+import string
 
 MIN_LENGTH = 4
 MAX_LENGTH = 13 
@@ -22,21 +23,21 @@ def generate_patterns():
         except FileExistsError:
             pass
         with open(filename, 'r', encoding="ISO-8859-1") as textfile:
-            data = textfile.read()
-            for i in range(MIN_LENGTH, MAX_LENGTH):
-                with open(patterns_path+dir_name+"/present_patterns.txt", "w", encoding="ISO-8859-1") as pres_patternfile:
-                    for j in range(0, NB_PRESENT_PATTERN):
-                        
-                            
-                        starting_point = random.randint(0, len(data))
+            data = textfile.read().lower()
+            
+            with open(patterns_path+dir_name+"/present_patterns.txt", "w", encoding="ISO-8859-1") as pres_patternfile:
+                for j in range(0, NB_PRESENT_PATTERN):
+                    for i in range(MIN_LENGTH, MAX_LENGTH + 1):
+                        starting_point = random.randint(0, len(data) - (MAX_LENGTH + 1))
 
                         pres_patternfile.write(data[starting_point:starting_point+i]+"\n")
-                
-                with open(patterns_path+dir_name+"/absent_patterns.txt", "w") as abs_patternfile:
-                    for j in range(0, NB_ABSENT_PATTERN):
-                        starting_point = random.randint(0,len(data))
-                        abs_patternfile.write(data[starting_point:starting_point+i] + "\n") # Need replacing with random words 
+            
+            with open(patterns_path+dir_name+"/absent_patterns.txt", "w", encoding="ISO-8859-1") as abs_patternfile:
+                for j in range(0, NB_ABSENT_PATTERN):
+                    for i in range(MIN_LENGTH, MAX_LENGTH + 1):
+
+                        chars = "".join([random.choice(string.ascii_letters) for k in range(i)] )
+                        abs_patternfile.write(chars + "\n") # Need replacing with random words 
 
 
-
-
+generate_patterns()

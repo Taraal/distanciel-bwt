@@ -1,4 +1,6 @@
-from . import pattern_generator, text_generator
+from pattern_generator import generate_patterns
+from text_generator import generate_texts
 
-pattern_generator.generate_patterns()
-text_generator.generate_texts()
+generate_texts()
+
+generate_patterns()
