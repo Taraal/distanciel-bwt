@@ -1,3 +1,5 @@
+import time
+
 def suffixArray(s):
     ''' Given T return suffix array SA(T).  Uses "sorted"
         function for simplicity, which is probably very slow. '''
@@ -77,6 +79,7 @@ class FmIndex():
         return ssa
     
     def __init__(self, t, cpIval=4, ssaIval=4):
+        time1 = time.time()
         if t[-1] != '$':
             t += '$' # add dollar if not there already
         # Get BWT string and offset of $ within it
@@ -98,12 +101,15 @@ class FmIndex():
         for c, count in sorted(tots.items()):
             self.first[c] = totc
             totc += count
+        time2 = time.time()
+        print(f"Création de l'index : {time2-time1}")
+        self.create_time = time2 - time1
     
     def count(self, c):
         ''' Return number of occurrences of characters < c '''
         if c not in self.first:
             # (Unusual) case where c does not occur in text
-            for cc in sorted(self.first.iterkeys()):
+            for cc in sorted(self.first):
                 if c < cc: return self.first[cc]
             return self.first[cc]
         else:

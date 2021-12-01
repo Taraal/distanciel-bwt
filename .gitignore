@@ -1,3 +1,3 @@
 /__pycache__
-data/patterns/*.txt
-data/split/*.txt
+data/patterns/*
+data/split/*
