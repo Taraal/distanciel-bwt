@@ -1,5 +1,8 @@
 import os
+import sys
 import csv
+import time
+
 
 from fm_index import FmIndex
 
@@ -27,7 +30,9 @@ def main():
     texts = [texts_path+"/"+f for f in os.listdir(texts_path) if os.path.isfile(os.path.join(texts_path, f))]
 
     hs = ["Longueur du Texte", "Temps de création de l'index"]
-    data = []
+    index_data = []
+    index_size_data = []
+    query_time_data = []
     for text_filename in texts:
         with open(text_filename, "r", encoding="ISO-8859-1") as textfile:
             t = textfile.read()
@@ -50,14 +55,30 @@ def main():
 
                     for pattern in patterns:
                         #print(sorted(fm.occurrences(pattern)))
+                        time1 = time.time()
                         fm.occurrences(pattern)
+                        time2 = time.time()
+                        query_time_data.append([len(t), (time2 - time1)])
 
-            data.append([len(t), fm.create_time])
+            index_data.append([len(t), fm.create_time])
+            index_size_data.append(sys.getsizeof(fm))
 
-    with open("results.csv", "w", encoding="utf8", newline="") as f:
+
+    with open("index_results.csv", "w", encoding="utf8", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(hs)
-        writer.writerows(data)
+        writer.writerows(index_data)
+
+    with open("index_size.csv", "w", encoding="utf8", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(hs)
+        writer.writerow(index_size_data)
+
+    with open(f"query_time_{user_input}.csv", "w", encoding="utf8", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(hs)
+        writer.writerow(query_time_data)
+
 
     return 0
 

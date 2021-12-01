@@ -2,8 +2,8 @@ import os
 import random
 import string
 
-MIN_LENGTH = 4
-MAX_LENGTH = 13 
+MIN_LENGTH = 12
+MAX_LENGTH = 25 
 
 NB_PRESENT_PATTERN = 80 
 NB_ABSENT_PATTERN = 20 
